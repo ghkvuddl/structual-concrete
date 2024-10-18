@@ -9,7 +9,6 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Spacer,
   Spinner,
   Text,
   Tooltip,

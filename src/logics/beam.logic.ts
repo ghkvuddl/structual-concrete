@@ -1,5 +1,5 @@
 import { Beam, BeamResult, BeamType } from "@/types/beam.type";
-import { getEquivalentRectangularStressValues } from "@/types/contrete.type";
+import { getEquivalentRectangularStressValues } from "@/types/concrete.type";
 import { SteelArea } from "@/types/steel.type";
 
 const MAX_COMPUTE_DURATION = 4000; // 최대 계산 시간 4초
