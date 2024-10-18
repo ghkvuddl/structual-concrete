@@ -1,11 +1,11 @@
 import computeBeamDesign from "@/logics/beam.logic";
-import { BeamType, Beam, BeamResult } from "@/types/beam.type";
+import { BeamResult, BeamType, Beam } from "@/types/beam.type";
 import { PAGE_STEP } from "@/types/step.type";
 import { useFormik } from "formik";
 import { useState } from "react";
 
 // BeamPage 상태관리
-export default function useBeamState() {
+export function useBeamState() {
   // 페이지 스텝 (입력, 처리, 결과)
   const [pageStep, setPageStep] = useState<PAGE_STEP>(PAGE_STEP.INPUT);
 

@@ -14,13 +14,14 @@ import {
   Tooltip,
   Wrap,
 } from "@chakra-ui/react";
-import useBeamState from "./beam.state";
 import { PAGE_STEP } from "@/types/step.type";
 import { Beam, BeamDisplayName, BeamToolTip, BeamType } from "@/types/beam.type";
 import { FormikErrors } from "formik";
 import { useRouter } from "next/router";
+import { useBeamState } from "@/hooks/useBeamState";
 
-export default function BeamPage() {
+// BeamPage UI
+export const BeamPage = () => {
   const router = useRouter();
   const { pageStep, setPageStep, formik, result } = useBeamState();
 
@@ -171,7 +172,9 @@ export default function BeamPage() {
         </div>
       );
   }
-}
+};
+
+export default BeamPage;
 
 /** 데이터 입력 컴포넌트 */
 const BeamInputComponent = ({
