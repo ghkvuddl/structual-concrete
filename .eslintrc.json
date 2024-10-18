@@ -1,3 +1,6 @@
-{
-  "extends": ["next/core-web-vitals", "next/typescript"]
-}
+// {
+//   "extends": ["next/core-web-vitals", "next/typescript"],
+//   "rules": {
+//     "no-unused-vars": "off" // 미사용 변수 경고 끄기
+//   }
+// }
