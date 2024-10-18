@@ -1,4 +1,4 @@
-## 📌Tips
+## 📌 Tips
 
 - 데이터 입력화면에서 변수 명에 마우스 호버시 변수의 용도를 알려줍니다.
 
@@ -6,9 +6,7 @@
 
 - 등가 직사각형 응력 분포값 확인은 src > types > concrete.type.ts 파일에서 확인하세요.
 
----
-
-## 🗂️Project Structure
+## 🗂️ Project Structure
 
 - hooks > 페이지별 상태관리같이 좀 더 복잡한 구조나, 공통으로 사용되는 hook 관리하는 폴더
 

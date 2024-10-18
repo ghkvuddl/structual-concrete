@@ -4,6 +4,10 @@ import {
   Divider,
   Heading,
   HStack,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -19,6 +23,9 @@ import { Beam, BeamDisplayName, BeamToolTip, BeamType } from "@/types/beam.type"
 import { FormikErrors } from "formik";
 import { useRouter } from "next/router";
 import { useBeamState } from "@/hooks/useBeamState";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { SUPPORTED_STEEL_DIAMETER } from "@/types/steel.type";
+import { PropsWithChildren } from "react";
 
 // BeamPage UI
 export const BeamPage = () => {
@@ -44,6 +51,7 @@ export const BeamPage = () => {
               type={Beam.elasticity_steel}
               value={formik.values[Beam.elasticity_steel]}
               setValue={formik.setFieldValue}
+              step={10000}
             />
           </Wrap>
           <Divider my={8} />
@@ -51,17 +59,32 @@ export const BeamPage = () => {
           {/* 상부 철근 데이터 */}
           <Heading size="md">✏️ 상부 철근 데이터</Heading>
           <Wrap spacing="30px" my={6}>
-            <BeamInputComponent type={Beam.fy_t} value={formik.values[Beam.fy_t]} setValue={formik.setFieldValue} />
+            <BeamInputComponent
+              type={Beam.fy_t}
+              value={formik.values[Beam.fy_t]}
+              setValue={formik.setFieldValue}
+              step={50}
+            />
+
             <BeamInputComponent
               type={Beam.top_steel_n}
               value={formik.values[Beam.top_steel_n]}
               setValue={formik.setFieldValue}
             />
-            <BeamInputComponent
-              type={Beam.top_steel_d}
-              value={formik.values[Beam.top_steel_d]}
-              setValue={formik.setFieldValue}
-            />
+
+            <BeamInputComponent type={Beam.top_steel_d}>
+              <Menu>
+                <MenuButton w={"180px"} as={Button} rightIcon={<ChevronDownIcon />}>
+                  {`D-${formik.values[Beam.top_steel_d]}`}
+                </MenuButton>
+                <MenuList>
+                  {SUPPORTED_STEEL_DIAMETER.map((d) => (
+                    <MenuItem onClick={() => formik.setFieldValue(Beam.top_steel_d, d)}>{`D-${d}`}</MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </BeamInputComponent>
+
             <BeamInputComponent
               type={Beam.top_steel_y}
               value={formik.values[Beam.top_steel_y]}
@@ -73,17 +96,32 @@ export const BeamPage = () => {
           {/* 하부 철근 데이터 */}
           <Heading size="md">✏️ 하부 철근 데이터</Heading>
           <Wrap spacing="30px" my={6}>
-            <BeamInputComponent type={Beam.fy_b} value={formik.values[Beam.fy_b]} setValue={formik.setFieldValue} />
+            <BeamInputComponent
+              type={Beam.fy_b}
+              value={formik.values[Beam.fy_b]}
+              setValue={formik.setFieldValue}
+              step={50}
+            />
+
             <BeamInputComponent
               type={Beam.bottom_steel_n}
               value={formik.values[Beam.bottom_steel_n]}
               setValue={formik.setFieldValue}
             />
-            <BeamInputComponent
-              type={Beam.bottom_steel_d}
-              value={formik.values[Beam.bottom_steel_d]}
-              setValue={formik.setFieldValue}
-            />
+
+            <BeamInputComponent type={Beam.bottom_steel_d}>
+              <Menu>
+                <MenuButton w={"180px"} as={Button} rightIcon={<ChevronDownIcon />}>
+                  {`D-${formik.values[Beam.bottom_steel_d]}`}
+                </MenuButton>
+                <MenuList>
+                  {SUPPORTED_STEEL_DIAMETER.map((d) => (
+                    <MenuItem onClick={() => formik.setFieldValue(Beam.bottom_steel_d, d)}>{`D-${d}`}</MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </BeamInputComponent>
+
             <BeamInputComponent
               type={Beam.bottom_steel_y}
               value={formik.values[Beam.bottom_steel_y]}
@@ -96,26 +134,42 @@ export const BeamPage = () => {
           <Heading size="md">✏️ 늑근(띠철근) 데이터</Heading>
           <Wrap spacing="30px" my={6}>
             <BeamInputComponent
+              type={Beam.fy_v}
+              value={formik.values[Beam.fy_v]}
+              setValue={formik.setFieldValue}
+              step={50}
+            />
+
+            <BeamInputComponent
               type={Beam.stirrup_n}
               value={formik.values[Beam.stirrup_n]}
               setValue={formik.setFieldValue}
             />
-            <BeamInputComponent
-              type={Beam.stirrup_d}
-              value={formik.values[Beam.stirrup_d]}
-              setValue={formik.setFieldValue}
-            />
+
+            <BeamInputComponent type={Beam.stirrup_d}>
+              <Menu>
+                <MenuButton w={"180px"} as={Button} rightIcon={<ChevronDownIcon />}>
+                  {`D-${formik.values[Beam.stirrup_d]}`}
+                </MenuButton>
+                <MenuList>
+                  {SUPPORTED_STEEL_DIAMETER.map((d) => (
+                    <MenuItem onClick={() => formik.setFieldValue(Beam.stirrup_d, d)}>{`D-${d}`}</MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </BeamInputComponent>
+
             <BeamInputComponent
               type={Beam.stirrup_s}
               value={formik.values[Beam.stirrup_s]}
               setValue={formik.setFieldValue}
             />
+
             <BeamInputComponent
               type={Beam.stirrup_h_prime}
               value={formik.values[Beam.stirrup_h_prime]}
               setValue={formik.setFieldValue}
             />
-            <BeamInputComponent type={Beam.fy_v} value={formik.values[Beam.fy_v]} setValue={formik.setFieldValue} />
           </Wrap>
 
           {/* 결과 페이지로 이동 버튼 */}
@@ -180,32 +234,35 @@ export default BeamPage;
 const BeamInputComponent = ({
   type,
   step,
-  value,
+  value = 0,
   setValue,
-}: {
+  children, // 커스텀 input UI 필요시 전달
+}: PropsWithChildren<{
   type: Beam;
   step?: number;
   // NOTE formik 전체 받지말고 value와 setValue만 받음처리
-  value: number;
-  setValue: (field: string, value: any, shouldValidate?: boolean) => Promise<void> | Promise<FormikErrors<BeamType>>;
-}) => {
+  value?: number;
+  setValue?: (field: string, value: any, shouldValidate?: boolean) => Promise<void> | Promise<FormikErrors<BeamType>>;
+}>) => {
   return (
     <div className="flex items-center gap-4">
       <Tooltip label={BeamToolTip[type]}>
         <div className="text-[16px] font-bold">{BeamDisplayName[type]}</div>
       </Tooltip>
-      <NumberInput
-        step={step}
-        name={type}
-        value={value}
-        onChange={(valueString) => setValue(type, Number(valueString))}
-      >
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+      {children ?? (
+        <NumberInput
+          step={step}
+          name={type}
+          value={value}
+          onChange={(valueString) => setValue && setValue(type, Number(valueString))}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      )}
     </div>
   );
 };
