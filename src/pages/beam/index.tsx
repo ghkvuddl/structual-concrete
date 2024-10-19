@@ -207,13 +207,13 @@ export const BeamPage = () => {
 
           {/* 전단 강도 결과 */}
           <Heading size="md">✅ Result of V</Heading>
-          <ResultComponent title="Steel Shear Force" value={result.steel_shear_force / 1000} />
-          <ResultComponent title="Concrete Shear Force" value={result.contrete_shear_force / 1000} />
-          <ResultComponent title="Max Shear Force" value={result.max_shear_force / 1000} />
-          <ResultComponent title="Shear Force" value={result.shear_force / 1000} />
+          <ResultComponent title="Steel Shear Force (kN)" value={result.steel_shear_force / 1000} />
+          <ResultComponent title="Concrete Shear Force (kN)" value={result.contrete_shear_force / 1000} />
+          <ResultComponent title="Max Shear Force (kN)" value={result.max_shear_force / 1000} />
+          <ResultComponent title="Shear Force (kN)" value={result.shear_force / 1000} />
 
           <ResultComponent title="ϕ (Fixed)" value={result.pi_shear_force} />
-          <ResultComponent title="ϕVn" value={(result.shear_force * result.pi_shear_force) / 1000} />
+          <ResultComponent title="ϕVn (kN)" value={(result.shear_force * result.pi_shear_force) / 1000} />
 
           <HStack w="full" mt={4}>
             <Button className="flex-grow" onClick={() => setPageStep(PAGE_STEP.INPUT)} colorScheme="blue">
