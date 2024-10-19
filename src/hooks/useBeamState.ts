@@ -1,6 +1,5 @@
 import computeBeamDesign from "@/logics/beam.logic";
 import { BeamResult, BeamType, Beam } from "@/types/beam.type";
-import { SUPPORTED_STEEL_DIAMETER } from "@/types/steel.type";
 import { PAGE_STEP } from "@/types/step.type";
 import { useFormik } from "formik";
 import { useState } from "react";
