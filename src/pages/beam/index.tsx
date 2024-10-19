@@ -79,7 +79,7 @@ export const BeamPage = () => {
                 </MenuButton>
                 <MenuList>
                   {SUPPORTED_STEEL_DIAMETER.map((d) => (
-                    <MenuItem onClick={() => formik.setFieldValue(Beam.top_steel_d, d)}>{`D-${d}`}</MenuItem>
+                    <MenuItem key={d} onClick={() => formik.setFieldValue(Beam.top_steel_d, d)}>{`D-${d}`}</MenuItem>
                   ))}
                 </MenuList>
               </Menu>
@@ -116,7 +116,7 @@ export const BeamPage = () => {
                 </MenuButton>
                 <MenuList>
                   {SUPPORTED_STEEL_DIAMETER.map((d) => (
-                    <MenuItem onClick={() => formik.setFieldValue(Beam.bottom_steel_d, d)}>{`D-${d}`}</MenuItem>
+                    <MenuItem key={d} onClick={() => formik.setFieldValue(Beam.bottom_steel_d, d)}>{`D-${d}`}</MenuItem>
                   ))}
                 </MenuList>
               </Menu>
@@ -153,7 +153,7 @@ export const BeamPage = () => {
                 </MenuButton>
                 <MenuList>
                   {SUPPORTED_STEEL_DIAMETER.map((d) => (
-                    <MenuItem onClick={() => formik.setFieldValue(Beam.stirrup_d, d)}>{`D-${d}`}</MenuItem>
+                    <MenuItem key={d} onClick={() => formik.setFieldValue(Beam.stirrup_d, d)}>{`D-${d}`}</MenuItem>
                   ))}
                 </MenuList>
               </Menu>

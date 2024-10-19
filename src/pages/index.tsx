@@ -1,4 +1,5 @@
 import { Button, Center, Divider } from "@chakra-ui/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -16,6 +17,13 @@ export default function Home() {
           Beam or Slab Design Sheet
         </Button>
       </Center>
+
+      {/* FOOTER */}
+      <footer className="flex justify-end">
+        <Link href={"https://github.com/ghkvuddl/structual-concrete"}>
+          🔗: https://github.com/ghkvuddl/structual-concrete
+        </Link>
+      </footer>
     </main>
   );
 }

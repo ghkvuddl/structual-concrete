@@ -6,6 +6,12 @@
 
 - 등가 직사각형 응력 분포값 확인은 src > types > concrete.type.ts 파일에서 확인하세요.
 
+## 🌐 Live Demo
+
+아래 링크를 통해 배포사이트를 확인할 수 있습니다.
+
+[http://sturctural-concrete.s3-website.ap-northeast-2.amazonaws.com/](http://sturctural-concrete.s3-website.ap-northeast-2.amazonaws.com/)
+
 ## 🗂️ Project Structure
 
 - hooks > 페이지별 상태관리같이 좀 더 복잡한 구조나, 공통으로 사용되는 hook 관리하는 폴더
