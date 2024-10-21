@@ -113,7 +113,7 @@ export interface BeamResult {
   /** 철근 전단 강도 */
   steel_shear_force: number;
   /** 콘크리트 전단 강도 */
-  contrete_shear_force: number;
+  concrete_shear_force: number;
   /** 전단 강도 */
   shear_force: number;
   /** 최대 전단 강도 */
