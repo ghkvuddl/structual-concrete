@@ -51,8 +51,8 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
       Math.min(beam[Beam.fy_b], steel_tension_strain * beam[Beam.elasticity_steel])
     );
     // c. 콘크리트
-    const contrete_area = beta * c * beam[Beam.b];
-    const contrete_stress = -eta * beam[Beam.fc_prime] * 0.85;
+    const concrete_area = beta * c * beam[Beam.b];
+    const concrete_stress = -eta * beam[Beam.fc_prime] * 0.85;
 
     /** FORCE */
     // a. 압축 철근
@@ -62,16 +62,16 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
     const steel_tension_force =
       steel_tension_stress * SteelArea[beam[Beam.bottom_steel_d] as keyof typeof SteelArea] * beam[Beam.bottom_steel_n];
     // c. 콘크리트
-    const contrete_force = contrete_stress * contrete_area;
+    const concrete_force = concrete_stress * concrete_area;
 
     /** 평형 조건 계산 */
-    const equilibriumForce = steel_compression_force + steel_tension_force + contrete_force;
+    const equilibriumForce = steel_compression_force + steel_tension_force + concrete_force;
 
     if (Math.abs(equilibriumForce) <= 0.1) {
       // 평형 조건 만족시 결과 주입 및 종료
       steel_compression_moment = -steel_compression_force * (beam[Beam.h] / 2 - beam[Beam.top_steel_y]);
       steel_tension_moment = -steel_tension_force * (beam[Beam.h] / 2 - beam[Beam.bottom_steel_y]);
-      concrete_moment = -contrete_force * (beam[Beam.h] / 2 - (c * beta) / 2);
+      concrete_moment = -concrete_force * (beam[Beam.h] / 2 - (c * beta) / 2);
       total_moment = steel_compression_moment + steel_tension_moment + concrete_moment;
       pi_moment = _computePiValue(beam[Beam.fy_b], beam[Beam.elasticity_steel], steel_tension_strain);
       break;
