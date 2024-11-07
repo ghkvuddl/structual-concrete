@@ -37,6 +37,16 @@ export const BeamPage = () => {
     case PAGE_STEP.INPUT:
       return (
         <form onSubmit={formik.handleSubmit} className="p-8">
+          {/* 철근 콘크리트 단면 그래픽*/}
+          <Wrap>
+            {/* 단면 */}
+            <div></div>
+
+            {/* 측면 */}
+            <div></div>
+          </Wrap>
+          {/* <Divider my={8} /> */}
+
           {/* 기본 데이터 */}
           <Heading size="md">✏️ 기본 데이터</Heading>
           <Wrap spacing="30px" my={6}>
@@ -208,7 +218,7 @@ export const BeamPage = () => {
           {/* 전단 강도 결과 */}
           <Heading size="md">✅ Result of V</Heading>
           <ResultComponent title="Steel Shear Force (kN)" value={result.steel_shear_force / 1000} />
-          <ResultComponent title="Concrete Shear Force (kN)" value={result.contrete_shear_force / 1000} />
+          <ResultComponent title="Concrete Shear Force (kN)" value={result.concrete_shear_force / 1000} />
           <ResultComponent title="Max Shear Force (kN)" value={result.max_shear_force / 1000} />
           <ResultComponent title="Shear Force (kN)" value={result.shear_force / 1000} />
 

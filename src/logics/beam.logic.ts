@@ -51,8 +51,8 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
       Math.min(beam[Beam.fy_b], steel_tension_strain * beam[Beam.elasticity_steel])
     );
     // c. 콘크리트
-    const contrete_area = beta * c * beam[Beam.b];
-    const contrete_stress = -eta * beam[Beam.fc_prime] * 0.85;
+    const concrete_area = beta * c * beam[Beam.b];
+    const concrete_stress = -eta * beam[Beam.fc_prime] * 0.85;
 
     /** FORCE */
     // a. 압축 철근
@@ -62,16 +62,16 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
     const steel_tension_force =
       steel_tension_stress * SteelArea[beam[Beam.bottom_steel_d] as keyof typeof SteelArea] * beam[Beam.bottom_steel_n];
     // c. 콘크리트
-    const contrete_force = contrete_stress * contrete_area;
+    const concrete_force = concrete_stress * concrete_area;
 
     /** 평형 조건 계산 */
-    const equilibriumForce = steel_compression_force + steel_tension_force + contrete_force;
+    const equilibriumForce = steel_compression_force + steel_tension_force + concrete_force;
 
     if (Math.abs(equilibriumForce) <= 0.1) {
       // 평형 조건 만족시 결과 주입 및 종료
       steel_compression_moment = -steel_compression_force * (beam[Beam.h] / 2 - beam[Beam.top_steel_y]);
       steel_tension_moment = -steel_tension_force * (beam[Beam.h] / 2 - beam[Beam.bottom_steel_y]);
-      concrete_moment = -contrete_force * (beam[Beam.h] / 2 - (c * beta) / 2);
+      concrete_moment = -concrete_force * (beam[Beam.h] / 2 - (c * beta) / 2);
       total_moment = steel_compression_moment + steel_tension_moment + concrete_moment;
       pi_moment = _computePiValue(beam[Beam.fy_b], beam[Beam.elasticity_steel], steel_tension_strain);
       break;
@@ -97,9 +97,9 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
    */
 
   const stirrup_area = SteelArea[beam[Beam.stirrup_d] as keyof typeof SteelArea] * beam[Beam.stirrup_n]; // 전단 철근 단면적
-  const contrete_shear_force = (1 / 6) * Math.sqrt(beam[Beam.fc_prime]) * beam[Beam.b] * beam[Beam.stirrup_h_prime];
+  const concrete_shear_force = (1 / 6) * Math.sqrt(beam[Beam.fc_prime]) * beam[Beam.b] * beam[Beam.stirrup_h_prime];
   const steel_shear_force = (stirrup_area * beam[Beam.fy_v] * beam[Beam.stirrup_h_prime]) / beam[Beam.stirrup_s];
-  const total_shear_force = contrete_shear_force + steel_shear_force;
+  const total_shear_force = concrete_shear_force + steel_shear_force;
 
   const max_shear_force = (5 / 6) * Math.sqrt(beam[Beam.fc_prime]) * beam[Beam.b] * beam[Beam.stirrup_h_prime];
 
@@ -114,12 +114,12 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
     pi_moment === undefined ||
     c === undefined ||
     steel_shear_force === undefined ||
-    contrete_shear_force === undefined ||
+    concrete_shear_force === undefined ||
     max_shear_force === undefined ||
     shear_force === undefined ||
     pi_shear_force === undefined
   ) {
-    throw Error("unkown error");
+    throw Error("unknown error");
   }
 
   return {
@@ -130,7 +130,7 @@ export default function computeBeamDesign(beam: BeamType): BeamResult {
     pi_moment,
     c,
     steel_shear_force, // N
-    contrete_shear_force, // N
+    concrete_shear_force, // N
     max_shear_force, // N
     shear_force, // N
     pi_shear_force,
