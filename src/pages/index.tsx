@@ -12,9 +12,13 @@ export default function Home() {
       <Divider className="my-[16px]" />
 
       {/* CONTENT */}
-      <Center className="flex-grow">
+      <Center className="flex-grow flex-col gap-8">
         <Button onClick={() => router.push("/beam")} colorScheme="blue">
           Beam or Slab Design Sheet
+        </Button>
+
+        <Button onClick={() => router.push("/column")} colorScheme="blue">
+          Column or Wall Design Sheet
         </Button>
       </Center>
 

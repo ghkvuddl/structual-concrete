@@ -36,12 +36,17 @@ export function useBeamState() {
     },
     // isInitialValid: false,
     onSubmit: (values) => {
+      // 상태를 PROCESSING으로 업데이트
       setPageStep(PAGE_STEP.PROCESSING);
 
-      const result = computeBeamDesign(values);
-      setResult(result);
+      // 비동기적으로 computeColumnDesign을 실행
+      setTimeout(() => {
+        const result = computeBeamDesign(values);
+        setResult(result);
 
-      setPageStep(PAGE_STEP.RESULT);
+        // 상태를 RESULT로 업데이트
+        setPageStep(PAGE_STEP.RESULT);
+      }, 0);
     },
     validationSchema: yup.object({
       //todo validation 로직 추가
