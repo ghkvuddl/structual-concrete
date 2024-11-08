@@ -2,7 +2,7 @@ import { Column, ColumnResult, ColumnType, SteelData } from "@/types/column.type
 import { getEquivalentRectangularStressValues } from "@/types/concrete.type";
 import { SteelArea } from "@/types/steel.type";
 
-const MAX_COMPUTE_DURATION = 4000; // 최대 계산 시간 4초
+const MAX_COMPUTE_DURATION = 7000; // 최대 계산 시간 7초
 
 /** 기둥 설계 페이지 계산 로직 */
 export default function computeColumnDesign(column: ColumnType): ColumnResult {
@@ -23,7 +23,10 @@ export default function computeColumnDesign(column: ColumnType): ColumnResult {
   let PMData: { p: number; m: number; pi: number }[] = [];
 
   const computeStartTime = Date.now(); // 컴퓨팅 시작 시간
-  for (let c = 1; c <= column[Column.h] * 2; c++) {
+
+  // STRATEGY: P - M 커브에서 M값은 0부터 시작하여 피크를 찍은 후 다시 0으로 돌아오는 형태이므로, M값이 다시 0에 가까워 질때까지 계산을 반복한다.
+  let m_before = 0; // 이전 모멘트 값
+  for (let c = 1; true; c++) {
     // 컴퓨팅 시간이 MAX_COMPUTE_DURATION 이상이면 종료
     const computeDuration = Date.now() - computeStartTime;
     if (computeDuration > MAX_COMPUTE_DURATION) throw Error("최대 컴퓨팅 시간을 초과했습니다.");
@@ -65,16 +68,21 @@ export default function computeColumnDesign(column: ColumnType): ColumnResult {
     const pi = _computePiValue(column[Column.fy], column[Column.elasticity_steel], eps_t); // 강도감소계수
 
     PMData.push({ p: P, m: M, pi: pi });
+
+    // M값이 0에 가까워지면 종료 (M값이 100000N*mm 즉 0.1kN*m 보다 작으면 0에 가깝다 판단하고 종료)
+    if (M < 100000 && m_before > M) {
+      break;
+    } else {
+      m_before = M;
+    }
   }
 
-  /** 최대 P값 (최대 압축 강도: 띠철근 사용시 80%, 나선철근 사용시 85% 적용됨으로 0.8로 적용) */
   const steel_area_sum = steel_area * steel_data.reduce((a, b) => a + b[SteelData.n], 0); // 주철근 총 단면적
+  /** 최대 P값 (최대 압축 강도: 띠철근 사용시 80%, 나선철근 사용시 85% 적용됨으로 0.8로 적용) */
   const Pmax =
     0.8 *
     (0.85 * column[Column.fc_prime] * (column[Column.b] * column[Column.h] - steel_area_sum) +
       steel_area_sum * column[Column.fy]);
-
-  PMData.map((d) => ({ ...d, p: Math.min(d.p, Pmax) })); // 최대 P값 적용
 
   /**
    * -----------------
@@ -94,6 +102,7 @@ export default function computeColumnDesign(column: ColumnType): ColumnResult {
 
   return {
     PMData,
+    Pmax,
     shear_force,
     pi_shear_force,
   };

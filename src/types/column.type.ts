@@ -72,6 +72,9 @@ export interface ColumnResult {
   /** P,M값 (N*mm)*/
   PMData: { p: number; m: number; pi: number }[];
 
+  /** 최대 P값 (N)*/
+  Pmax: number;
+
   /** 전단 강도 (N)*/
   shear_force: number;
 

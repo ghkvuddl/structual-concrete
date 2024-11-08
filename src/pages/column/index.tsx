@@ -41,6 +41,7 @@ import { SUPPORTED_STEEL_DIAMETER } from "@/types/steel.type";
 import { PropsWithChildren } from "react";
 import { Column, ColumnDisplayName, ColumnToolTip, ColumnType, SteelData, SteelDataToolTip } from "@/types/column.type";
 import { useColumnState } from "@/hooks/useColumnState";
+import PMGraphGraphic from "@/graphics/pmGraph.graphic";
 
 // ColumnPage UI
 const ColumnPage = () => {
@@ -52,6 +53,7 @@ const ColumnPage = () => {
     case PAGE_STEP.INPUT:
       return (
         <form onSubmit={formik.handleSubmit} className="p-8">
+          <p className="text-[12px]">* 현재 단주기둥 설계만 가능합니다.</p>
           {/* 기둥 단면 그래픽*/}
           <Wrap>
             {/* 단면 */}
@@ -227,8 +229,9 @@ const ColumnPage = () => {
         <div className="p-8 flex flex-col">
           {/* PM 결과 그래픽 */}
           <Heading size="md" my={4}>
-            ✅ P,M Graph
+            ✅ P-M Graph
           </Heading>
+          <PMGraphGraphic data={result.PMData} pMax={result.Pmax} />
 
           {/* PM 결과 표 */}
           <Accordion allowToggle>
@@ -240,7 +243,7 @@ const ColumnPage = () => {
               <AccordionPanel pb={4}>
                 <TableContainer>
                   <Table variant="striped" colorScheme="blue">
-                    <TableCaption>c값에 따른 P, M 표 (*Pmax 적용됨)</TableCaption>
+                    <TableCaption>c값에 따른 P, M 표</TableCaption>
                     <Thead>
                       <Tr>
                         <Th>c</Th>

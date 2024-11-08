@@ -18,11 +18,17 @@
 
 - logics > FE코드에 관심 없고 설계 로직만 확인하고 싶은분들을 위해 설계 로직만 따로 만들어 놓은 폴더
 
+  > 보 (슬라브) 설계: beam.logic.ts
+
+  > 기둥 (벽체) 설계: column.logic.ts
+
 - pages > 라우팅 및 UI 그리는 폴더
 
   > 메인 페이지: src > pages > index.tsx
 
   > 빔 또는 슬라브 설계 페이지: src > pages > beam > index.tsx
+
+- graphics > UI중에서도 특히 이해를 돕기위해 그림, 도형 등 시각적 자료를 그리는 폴더
 
 - styles > 글로벌 스타일 적용 폴더
 
