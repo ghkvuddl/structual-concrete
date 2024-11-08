@@ -28,7 +28,7 @@ import { SUPPORTED_STEEL_DIAMETER } from "@/types/steel.type";
 import { PropsWithChildren } from "react";
 
 // BeamPage UI
-export const BeamPage = () => {
+const BeamPage = () => {
   const router = useRouter();
   const { pageStep, setPageStep, formik, result } = useBeamState();
 
@@ -210,7 +210,7 @@ export const BeamPage = () => {
           <ResultComponent title="Concrete Moment (kN*m)" value={result.concrete_moment / 1000000} />
           <ResultComponent title="Total Moment (kN*m)" value={result.total_moment / 1000000} />
 
-          <ResultComponent title="ϕ" value={result.pi_moment} />
+          <ResultComponent title="ϕ" value={`${result.pi_moment}`} />
           <ResultComponent title="ϕMn (kN*m)" value={(result.pi_moment * result.total_moment) / 1000000} />
 
           <Divider my={8} />
@@ -222,7 +222,7 @@ export const BeamPage = () => {
           <ResultComponent title="Max Shear Force (kN)" value={result.max_shear_force / 1000} />
           <ResultComponent title="Shear Force (kN)" value={result.shear_force / 1000} />
 
-          <ResultComponent title="ϕ (Fixed)" value={result.pi_shear_force} />
+          <ResultComponent title="ϕ (Fixed)" value={`${result.pi_shear_force}`} />
           <ResultComponent title="ϕVn (kN)" value={(result.shear_force * result.pi_shear_force) / 1000} />
 
           <HStack w="full" mt={4}>
@@ -278,11 +278,11 @@ const BeamInputComponent = ({
 };
 
 /** 데이터 결과 컴포넌트 */
-const ResultComponent = ({ title, value }: { title: string; value: number }) => {
+const ResultComponent = ({ title, value }: { title: string; value: number | string }) => {
   return (
     <HStack my={3}>
       <Text fontSize="20px">{`${title} :`}</Text>
-      <Heading size="md">{value}</Heading>
+      <Heading size="md">{typeof value == "number" ? value.toFixed(4) : value}</Heading>
     </HStack>
   );
 };
