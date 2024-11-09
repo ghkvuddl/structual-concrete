@@ -17,15 +17,16 @@ export function useColumnState() {
   const formik = useFormik<ColumnType>({
     initialValues: {
       [Column.fc_prime]: 30,
-      [Column.b]: 400,
-      [Column.h]: 400,
+      [Column.b]: 500,
+      [Column.h]: 500,
       [Column.elasticity_steel]: 200000,
       [Column.fy]: 600,
-      [Column.steel_d]: 19,
+      [Column.steel_d]: 25,
       [Column.steel_data]: [
-        { y: 50, n: 3 },
-        { y: 200, n: 2 },
-        { y: 350, n: 3 },
+        { y: 55, n: 4 },
+        { y: 185, n: 2 },
+        { y: 315, n: 2 },
+        { y: 445, n: 4 },
       ],
       [Column.fy_v]: 400,
       [Column.stirrup_n]: 2,

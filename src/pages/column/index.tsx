@@ -42,6 +42,7 @@ import { PropsWithChildren } from "react";
 import { Column, ColumnDisplayName, ColumnToolTip, ColumnType, SteelData, SteelDataToolTip } from "@/types/column.type";
 import { useColumnState } from "@/hooks/useColumnState";
 import PMGraphGraphic from "@/graphics/pmGraph.graphic";
+import ColumnDiagramGraphic from "@/graphics/columnDiagram.graphic";
 
 // ColumnPage UI
 const ColumnPage = () => {
@@ -53,16 +54,12 @@ const ColumnPage = () => {
     case PAGE_STEP.INPUT:
       return (
         <form onSubmit={formik.handleSubmit} className="p-8">
+          {/* todo 장주기둥 설계 추가 */}
           <p className="text-[12px]">* 현재 단주기둥 설계만 가능합니다.</p>
           {/* 기둥 단면 그래픽*/}
-          <Wrap>
-            {/* 단면 */}
-            <div></div>
+          <ColumnDiagramGraphic data={formik.values} />
 
-            {/* 측면 */}
-            <div></div>
-          </Wrap>
-          {/* <Divider my={8} /> */}
+          <Divider my={8} />
 
           {/* 기본 데이터 */}
           <Heading size="md">✏️ 기본 데이터</Heading>
