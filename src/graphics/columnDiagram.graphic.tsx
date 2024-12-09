@@ -66,7 +66,10 @@ const ColumnDiagramGraphic = ({ data }: { data: ColumnType }) => {
             width,
             backgroundColor: "rgb(190,190,190)",
             minHeight: stirrup_spacing * 4,
-            border: "1px solid black",
+            borderTop: "1px dashed black",
+            borderBottom: "1px dashed black",
+            borderLeft: "1px solid black",
+            borderRight: "1px solid black",
           }}
         >
           <div

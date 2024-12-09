@@ -26,6 +26,7 @@ import { useBeamState } from "@/hooks/useBeamState";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { SUPPORTED_STEEL_DIAMETER } from "@/types/steel.type";
 import { PropsWithChildren } from "react";
+import BeamDiagramGraphic from "@/graphics/beamDiagram.graphic";
 
 // BeamPage UI
 const BeamPage = () => {
@@ -38,14 +39,8 @@ const BeamPage = () => {
       return (
         <form onSubmit={formik.handleSubmit} className="p-8">
           {/* 철근 콘크리트 단면 그래픽*/}
-          <Wrap>
-            {/* 단면 */}
-            <div></div>
-
-            {/* 측면 */}
-            <div></div>
-          </Wrap>
-          {/* <Divider my={8} /> */}
+          <BeamDiagramGraphic data={formik.values} />
+          <Divider my={8} />
 
           {/* 기본 데이터 */}
           <Heading size="md">✏️ 기본 데이터</Heading>
